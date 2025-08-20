@@ -1,0 +1,6 @@
+export {default as TagsModal} from './modal/TagsModal/TagsModal'
+export {default as CreateNoteModal} from './modal/CreateNoteModal/CreateNoteModal'
+export {default as ReadNoteModal} from './modal/ReadNoteModal/ReadNoteModal'
+export {default as FiltersModal} from './modal/FiltersModal/FiltersModal'
+export {default as NoteCard} from './NoteCard/NoteCard'
+export {default as MainWrapper} from './MainWrapper/MainWrapper'
