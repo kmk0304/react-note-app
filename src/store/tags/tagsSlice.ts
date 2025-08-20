@@ -3,7 +3,9 @@ import {v4} from 'uuid'
 
 const initialState = {
   tagsList:[
-    {tag: "learnings", id: v4(), }
+    {tag: "coding", id: v4()},
+    {tag: "Exercise", id: v4()},
+    {tag: "Relationship", id: v4()},
   ]
 }
 
