@@ -4,6 +4,7 @@ import { useAppSelector } from '../../hooks/redux'
 import { ButtonOutline, Container, EmptyMsgBox } from '../../styles/styles'
 import { Box, InputBox, TopBox } from './AllNotes.styles'
 import { toggleFilterNoteModal } from '../../store/modal/modalSlice'
+import getAllNotes from '../../utils/getAllNotes'
 
 const AllNotes = () => {
 
@@ -38,7 +39,7 @@ const AllNotes = () => {
             </TopBox>
             <Box>
               {/*Notes*/}
-              g{etAllNotes({mainNotes, filter})}
+              {getAllNotes(mainNotes, filter)}
             </Box>
           </>
         )}
