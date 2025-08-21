@@ -38,6 +38,7 @@ const AllNotes = () => {
             </TopBox>
             <Box>
               {/*Notes*/}
+              g{etAllNotes({mainNotes, filter})}
             </Box>
           </>
         )}
