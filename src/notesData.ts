@@ -22,8 +22,8 @@ const notes = [
     priority: "high",
     isPinned: true,
     isRed: false,
-    date: "10/12/22 2:55 PM",
-    createTime: new Date("Sat Dec 10 2022 14:55:22").getTime(),
+    date: "10/12/23 2:55 PM",
+    createTime: new Date("Sat Dec 10 2023 14:55:22").getTime(),
     editedTime: "",
     id: v4(),
   }
