@@ -1,22 +1,30 @@
 import { FaEdit, FaTrash, FaTrashRestore } from "react-icons/fa"
 import { NotesIconBox } from "../styles/styles"
-import { RiInboxUnarchiveFill } from './react-icon/ri'
+import { RiInboxUnarchiveFill } from 'react-icons/ri'
 import type { Dispatch } from "@reduxjs/toolkit"
 import type { Note } from "../types/note"
+import { toggleCreateNoteModal } from "../store/modal/modalSlice"
+import { deleteNote, restoreNote, setArchiveNotes, setEditNote, setTrashNotes, unArchiveNote } from "../store/noteList/noteListSlice"
 
 
 const getRelevantBtns = (type:string, note: Note, dispatch:Dispatch) => {
+
+  const clickHandler = () => {
+    dispatch(toggleCreateNoteModal(true));
+    dispatch(setEditNote(note))
+  }
+
   if (type === "archive") {
     return (
       <>
         <NotesIconBox
-          onClick={() => dispatch(unarchiveNote(note))}
+          onClick={() => dispatch(unArchiveNote(note))}
           data-info="Unarchive"
         >
           <RiInboxUnarchiveFill style={{ fontSize: '1rem' }} />
         </NotesIconBox>
         <NotesIconBox
-          onClick={() => dispatch(setTrashNote(note))}
+          onClick={() => dispatch(setTrashNotes(note))}
           data-info="Delete"
         >
           <FaTrash />
@@ -26,7 +34,7 @@ const getRelevantBtns = (type:string, note: Note, dispatch:Dispatch) => {
   } else if (type === "trash") {
     return (
       <>
-          <NotesIconBox
+        <NotesIconBox
           onClick={() => dispatch(restoreNote(note))}
           data-info="Restore"
         >
@@ -43,7 +51,7 @@ const getRelevantBtns = (type:string, note: Note, dispatch:Dispatch) => {
   } else {
     return (
       <>
-         <NotesIconBox
+        <NotesIconBox
           onClick={clickHandler}
           data-info="Edit"
         >
@@ -53,10 +61,10 @@ const getRelevantBtns = (type:string, note: Note, dispatch:Dispatch) => {
           onClick={() => dispatch(setArchiveNotes(note))}
           data-info="Archive"
         >
-         <FaTrashRestore style={{ fontSize: '1rem' }} />
+          <FaTrashRestore style={{ fontSize: '1rem' }} />
         </NotesIconBox>
         <NotesIconBox
-          onClick={() => dispatch(setTrashNote(note))}
+          onClick={() => dispatch(setTrashNotes(note))}
           data-info="Delete"
         >
           <FaTrash />

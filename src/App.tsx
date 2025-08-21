@@ -2,17 +2,18 @@ import './App.css'
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom'
 import { Navbar, Sidebar } from './layout'
 import { AllNotes, ArchiveNotes, ErrorPage, TagNotes, TrashNotes } from './pages'
-import { TagsModal } from './components'
+import { CreateNoteModal, TagsModal } from './components'
 import { useAppSelector } from './hooks/redux'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
 
-  const {viewEditTagsModal}  = useAppSelector(state => state.modal)
+  const {viewEditTagsModal, viewCreateTagModal}  = useAppSelector(state => state.modal)
 
   return (
     <div className="app">
+      {viewCreateTagModal && <CreateNoteModal/>}
       {viewEditTagsModal && <TagsModal type='edit'/>}
       
       <ToastContainer

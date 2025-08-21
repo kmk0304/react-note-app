@@ -8,10 +8,10 @@ const notes = [
     color: "#cce0ff",
     priority: "high",
     isPinned: true,
-    isRed: false,
+    isRead: false,
     date: "10/12/22 2:55 PM",
     createTime: new Date("Sat Dec 10 2022 14:55:22").getTime(),
-    editedTime: "",
+    editedTime: null,
     id: v4(),
   },
    {
@@ -21,10 +21,10 @@ const notes = [
     color: "#ffcccc",
     priority: "high",
     isPinned: true,
-    isRed: false,
+    isRead: false,
     date: "10/12/23 2:55 PM",
     createTime: new Date("Sat Dec 10 2023 14:55:22").getTime(),
-    editedTime: "",
+    editedTime: null,
     id: v4(),
   }
 ]

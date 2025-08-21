@@ -3,6 +3,9 @@ import type { Note } from '../../types/note'
 import { Card, ContentBox, FooterBox, TagsBox, TopBox } from './NoteCard.styles'
 import { NotesIconBox } from '../../styles/styles'
 import { BsFillPinFill } from 'react-icons/bs'
+import { useAppDispatch } from '../../hooks/redux'
+import getRelevantBtns from '../../utils/getRelevantBtns'
+import { readNote, setPinnedNotes } from '../../store/noteList/noteListSlice'
 
 interface NoteCardProps {
   note: Note
@@ -10,38 +13,48 @@ interface NoteCardProps {
 }
 
 const NoteCard = ({ note, type }: NoteCardProps) => {
-  const { title, content, tags, color, priority, isPinned, isRed, date, createTime, editedTimeid } = note
+  const { title, content, tags, color, priority, date, isPinned, isRead, id } = note;
+  const dispatch = useAppDispatch()
   return (
-    <Card
-      style={{ background: color }}>
-      <TopBox>
-        <div className='noteCard__title'>
-          {title.length > 10 ? title.slice(0, 10) + '...' : title}
-        </div>
-        <div className='nostCard__top-options'>
-          <span className='noteCard__priority'>
+     <>
+      <Card style={{ background: color }}>
+        <TopBox>
+          <div
+            className='noteCard__title'
+          >
+            {title.length > 10 ? title.slice(0, 10) + '...' : title}
+          </div>
+          <div className='noteCard__top-options'>
+            <span className='noteCard__priority'>
+              {priority}
+            </span>
+
             {type !== "archive" && type !== "trash" && (
-              <NotesIconBox className='noteCard__pin'>
-                <BsFillPinFill style={{color: isPinned ? "red" : ""}}/>
+              <NotesIconBox
+                className='noteCard__pin'
+                onClick={() => dispatch(setPinnedNotes({ id }))}
+              >
+                <BsFillPinFill
+                  style={{ color: isPinned ? "red" : "" }}
+                />
               </NotesIconBox>
             )}
-          </span>
-        </div>
-      </TopBox>
-      <ContentBox>
-        {content}
-      </ContentBox>
-      <TagsBox>
-        {tags.map(({ tag, id }) => (
-          <span key={id}>{tag}</span>
-        ))}
-      </TagsBox>
-      <FooterBox>
-        <div className='noteCard__date'>{date}</div>
-        {getRelevantBtns()}
-      </FooterBox>
+          </div>
+        </TopBox>
+        <ContentBox onClick={() => dispatch(readNote({ type, id }))}>
+        </ContentBox>
+        <TagsBox>
+          {tags.map(({ tag, id }) => (
+            <span key={id}>{tag}</span>
+          ))}
+        </TagsBox>
 
-    </Card>
+        <FooterBox>
+          <div className='noteCard__date'>{date}</div>
+          <div>{getRelevantBtns(type, note, dispatch)}</div>
+        </FooterBox>
+      </Card>
+    </>
   )
 }
 

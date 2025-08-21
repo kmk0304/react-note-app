@@ -7,9 +7,9 @@ export interface Note {
   color: string
   priority: string
   isPinned: boolean
-  isRed: boolean
+  isRead: boolean
   date: string
   createTime: number
-  editedTime: string | number
+  editedTime: null | number
   id: string
 }

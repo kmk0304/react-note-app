@@ -6,20 +6,78 @@ interface noteListState {
   mainNotes:Note[],
   archiveNotes: Note[],
   trashNotes: Note[],
-  editNotes: Note[]
+  editNote: null | Note
 }
 
 const initialState: noteListState = {
   mainNotes:[...notes],
   archiveNotes: [],
   trashNotes: [],
-  editNotes: []
+  editNote: null
+}
+
+enum noteType {
+  mainNotes = 'mainNotes',
+  archiveNotes = 'archiveNotes',
+  trashNotes = 'trashNotes'
 }
 
 const noteListSlice = createSlice({
   name: 'noteList',
   initialState,
   reducers: {
+    setMainNotes: (state, {payload}) =>{
+      if(state.mainNotes.find(({id})=> id === payload.id)){ //편진
+        state.mainNotes = state.mainNotes.map( note =>
+          note.id === payload.id ? payload : note
+        )
+      } else { //추가
+        state.mainNotes.push(payload)
+      }
+    },
+    setArchiveNotes: (state, {payload}) =>{
+      state.mainNotes = state.mainNotes.filter(({ id }) => id !== id)
+      state.archiveNotes.push({...payload, isPinned: false})
+    },
+    setTrashNotes: (state, {payload}) =>{
+      state.mainNotes = state.mainNotes.filter(({ id }) => id !== payload.id)
+      state.archiveNotes = state.archiveNotes.filter(({ id }) => id !== payload.id)
+      state.trashNotes.push({ ...payload, isPinned: false })
+    },
+    unArchiveNote: (state, {payload}) =>{
+      state.archiveNotes = state.archiveNotes.filter(({id})=> id !== payload.id)
+      state.mainNotes.push({...payload})
+    },
+    restoreNote: (state, {payload}) =>{
+      state.trashNotes = state.trashNotes.filter(({id})=> id!== payload)
+      state.mainNotes.push(...payload)
+    },
+    deleteNote: (state, {payload}) =>{
+      state.trashNotes = state.trashNotes.filter(({id})=> id !== payload.id)
+    },
+    setPinnedNotes: (state, {payload}) =>{
+      state.mainNotes = state.mainNotes.map((note) => note.id === payload.id ? 
+        {...note, isPinned: !note.isPinned} : note ) 
+    },
+    setEditNote : (state, {payload}) => {
+      state.editNote = payload
+    },
+    readNote: (state, {payload}) =>{
+      const { type, id } = payload
+
+      const setRead = (note: noteType) => {
+        state[note] = state[note].map((note) =>
+          note.id === id ? { ...note, isRead: !note.isRead } : note)
+      }
+
+      if (type === "archive") {
+        setRead(noteType.archiveNotes)
+      } else if (type === "trash") {
+        setRead(noteType.trashNotes)
+      } else {
+        setRead(noteType.mainNotes)
+      }
+    },
     removeTags: (state, { payload }) => {
       state.mainNotes = state.mainNotes.map((note) => ({
         ...note,
@@ -30,6 +88,16 @@ const noteListSlice = createSlice({
   }
 })
 
-export const { removeTags } = noteListSlice.actions
- 
+export const { 
+  setMainNotes, 
+  setArchiveNotes,
+  setTrashNotes, 
+  unArchiveNote, 
+  restoreNote, 
+  deleteNote, 
+  setPinnedNotes, 
+  setEditNote,
+  readNote,
+  removeTags } = noteListSlice.actions
+
 export default noteListSlice.reducer
