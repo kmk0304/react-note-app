@@ -17,20 +17,23 @@ const Navbar = () => {
   }
 
   return (
-    <StyledNav>
+  <StyledNav>
       <div className='nav__menu'>
         <FiMenu onClick={() => dispatch(toggleMenu(true))} />
       </div>
+
       <Container>
-        <div className='nav__page-title'>{getStandardName(state)}</div>
+        <div className='nav__page-title'>{getStandardName(state)} </div>
+
         {state !== "Trash" && state !== "Archive" &&
           <ButtonFill
             onClick={() => dispatch(toggleCreateNoteModal(true))}
-            className='nav__btn'
+            className="nav__btn"
           >
             <span>+</span>
           </ButtonFill>
         }
+
       </Container>
     </StyledNav>
   )

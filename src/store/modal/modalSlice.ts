@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface ModalSate {
-  viewEditTagModal:boolean,
+  viewEditTagsModal:boolean,
   viewAddTagModal:boolean,
   viewCreateTagModal:boolean,
   viewFiltersTagModal:boolean
 }
 const initialState: ModalSate = {
-  viewEditTagModal:false,
+  viewEditTagsModal:false,
   viewAddTagModal:false,
   viewCreateTagModal:false,
   viewFiltersTagModal:false
@@ -21,7 +21,7 @@ const modalSlice = createSlice({
       if(type==="add"){
         state.viewAddTagModal = view
       } else {
-        state.viewEditTagModal = view
+        state.viewEditTagsModal = view
       }
     },
     toggleCreateNoteModal:(state, action)=>{

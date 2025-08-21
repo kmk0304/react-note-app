@@ -30,27 +30,30 @@ const Sidebar = () => {
         <StyledLogo>
           <h1>Keep</h1>
         </StyledLogo>
-        <ItemsBox>
-          {/*note item*/}
+
+        <ItemsBox >
+          {/* note item */}
           <li onClick={() => dispatch(toggleMenu(false))}>
             <NavLink
               to={"/"}
               state={`notes`}
-              className={({ isActive }) => isActive ? "active-item" : "inactive-item"}>
+              className={({ isActive }) => isActive ? "active-item" : "inactive-item"}
+            >
               <span>
                 <FaLightbulb />
               </span>
               <span>Notes</span>
             </NavLink>
-
           </li>
-          {/*tag item*/}
+
+          {/* tag items */}
           {tagsList?.map(({ tag, id }) => (
             <li key={id} onClick={() => dispatch(toggleMenu(false))}>
               <NavLink
                 to={`/tag/${tag}`}
                 state={`${tag}`}
-                className={({ isActive }) => isActive ? "active-item" : "inactive-item"}>
+                className={({ isActive }) => isActive ? "active-item" : "inactive-item"}
+              >
                 <span>
                   <FaTag />
                 </span>
@@ -59,21 +62,25 @@ const Sidebar = () => {
             </li>
           ))}
 
-          {/*edit tag item*/}
-          <li className='sidebar__edit-item'
-            onClick={() => dispatch(toggleTagsModal({ type: "edit", view: true }))}>
+          {/* edit tag item */}
+          <li
+            className='sidebar__edit-item'
+            onClick={() => dispatch(toggleTagsModal({ type: "edit", view: true }))}
+          >
             <span>
               <MdEdit />
             </span>
             <span>Edit Notes</span>
           </li>
-          {/*other item*/}
+
+          {/* other items */}
           {items.map(({ icon, title, id }) => (
             <li key={id} onClick={() => dispatch(toggleMenu(false))}>
               <NavLink
                 to={`/${title.toLocaleLowerCase()}`}
                 state={`${title}`}
-                className={({ isActive }) => isActive ? "active-item" : "inactive-item"}>
+                className={({ isActive }) => isActive ? "active-item" : "inactive-item"}
+              >
                 <span>{icon}</span>
                 <span>{title}</span>
               </NavLink>

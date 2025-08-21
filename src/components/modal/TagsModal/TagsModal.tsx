@@ -1,8 +1,71 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
+import { DeleteBox, FixedContainer } from '../Modal.styles'
+import { Box, StyledInput, TagsBox } from './TagModal.styles'
+import { toggleTagsModal } from '../../../store/modal/modalSlice'
+import getStandardName from '../../../utils/getStandardName'
+import { v4 } from 'uuid'
+import { addTags, deleteTags } from '../../../store/tags/tagsSlice'
+import { removeTags } from '../../../store/noteList/noteListSlice'
+import { FaTimes } from 'react-icons/fa'
 
-const TagsModal = () => {
+interface TagsModalProps {
+  type: string
+}
+
+const TagsModal = ({ type }: TagsModalProps) => {
+
+  const dispatch = useAppDispatch()
+  const { tagsList } = useAppSelector(state => state.tags)
+  const [inputText, setInputText] = useState('');
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault() //렌더링 방지
+
+    if (!inputText) return
+
+    dispatch(addTags({ tag: inputText.toLocaleLowerCase(), id: v4() }))
+    setInputText('')
+  }
+
+  const deleteTagsHandler = (tag: string, id: string) => {
+    dispatch(deleteTags(id))
+    dispatch(removeTags({ tag }))
+  }
+
   return (
-    <div>TagsModal</div>
+    <FixedContainer>
+      <Box>
+        <div className='editTags__header'>
+          <div className='editTags__title'>
+            {type === "add" ? "ADD" : "Edit"} Tags
+          </div>
+          <DeleteBox
+            className='eidtTags__close'
+            onClick={(() => dispatch(toggleTagsModal({ type, view: false })))}>
+              <FaTimes/>
+          </DeleteBox>
+        </div>
+        <form onSubmit={submitHandler}>
+          <StyledInput
+            type="text"
+            value={inputText}
+            placeholder='new Tag'
+            onChange={e => setInputText(e.target.value)} />
+        </form>
+        <TagsBox>
+          {tagsList.map(({ tag, id }) => (
+            <li key={id}>
+              <div className='editTags__Tag'>
+                {getStandardName(tag)}
+              </div>
+              <DeleteBox onClick={() => deleteTagsHandler(tag, id)}>
+                 <FaTimes/>
+              </DeleteBox>
+            </li>
+          ))}
+        </TagsBox>
+      </Box>
+    </FixedContainer>
   )
 }
 
