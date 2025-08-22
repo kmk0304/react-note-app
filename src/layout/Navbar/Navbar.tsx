@@ -12,7 +12,7 @@ const Navbar = () => {
   const dispatch = useAppDispatch()
   const { pathname, state } = useLocation()
 
-  if(pathname === "404"){
+  if(pathname === "/404"){
     return null
   }
 

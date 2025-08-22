@@ -22,7 +22,7 @@ const Sidebar = () => {
   const { tagsList } = useAppSelector(state => state.tags)
   const { pathname } = useLocation()
 
-  if (pathname === "/404") return null
+  if (pathname === "/404") {return null}
 
   return (
     <Container openMenu={isOpen ? "open" : ""}>
@@ -74,7 +74,7 @@ const Sidebar = () => {
           </li>
 
           {/* other items */}
-          {items.map(({ icon, title, id }) => (
+             {items.map(({ icon, title, id }) => (
             <li key={id} onClick={() => dispatch(toggleMenu(false))}>
               <NavLink
                 to={`/${title.toLocaleLowerCase()}`}
