@@ -4,13 +4,13 @@ interface ModalSate {
   viewEditTagsModal:boolean,
   viewAddTagModal:boolean,
   viewCreateTagModal:boolean,
-  viewFiltersTagModal:boolean
+  viewFiltersModal:boolean
 }
 const initialState: ModalSate = {
   viewEditTagsModal:false,
   viewAddTagModal:false,
   viewCreateTagModal:false,
-  viewFiltersTagModal:false
+  viewFiltersModal:false
 }
 const modalSlice = createSlice({
   name: 'modal',

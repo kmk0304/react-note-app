@@ -5,6 +5,7 @@ import { ButtonOutline, Container, EmptyMsgBox } from '../../styles/styles'
 import { Box, InputBox, TopBox } from './AllNotes.styles'
 import { toggleFilterNoteModal } from '../../store/modal/modalSlice'
 import getAllNotes from '../../utils/getAllNotes'
+import { FiltersModal } from '../../components'
 
 const AllNotes = () => {
 
@@ -13,9 +14,26 @@ const AllNotes = () => {
   const {mainNotes} = useAppSelector(state => state.noteList)
   const [filter, setFilter] = useState('')
   const [searchInput, setSearchInput] = useState('')
+  const {viewFiltersModal} = useAppSelector(state => state.modal)
+
+  const filterHandler = (e: React.ChangeEvent<HTMLInputElement>) =>{
+    setFilter(e.target.value)
+  }
+   const clearHandler = () =>{
+    setFilter(e.target.value)
+  }
 
   return (
     <Container>
+      {viewFiltersModal && (
+        <FiltersModal 
+        handleFilter = {filterHandler}
+        handleClear = {clearHandler}
+        filter = {filter}
+        >
+
+        </FiltersModal>
+      )}
       {mainNotes.length === 0 ?
         <EmptyMsgBox>
           노트가 없습니다.
