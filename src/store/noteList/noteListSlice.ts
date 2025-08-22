@@ -35,9 +35,9 @@ const noteListSlice = createSlice({
         state.mainNotes.push(payload)
       }
     },
-    setArchiveNotes: (state, {payload}) =>{
-      state.mainNotes = state.mainNotes.filter(({ id }) => id !== id)
-      state.archiveNotes.push({...payload, isPinned: false})
+    setArchiveNotes: (state, { payload }) => {
+      state.mainNotes = state.mainNotes.filter(({ id }) => id !== payload.id)
+      state.archiveNotes.push({ ...payload, isPinned: false })
     },
     setTrashNotes: (state, {payload}) =>{
       state.mainNotes = state.mainNotes.filter(({ id }) => id !== payload.id)
