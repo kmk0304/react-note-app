@@ -6,15 +6,25 @@ import { BsFillPinFill } from 'react-icons/bs'
 import { useAppDispatch } from '../../hooks/redux'
 import getRelevantBtns from '../../utils/getRelevantBtns'
 import { readNote, setPinnedNotes } from '../../store/noteList/noteListSlice'
+import parse from 'html-react-parser'
 
 interface NoteCardProps {
   note: Note
   type: string
 }
 
+
 const NoteCard = ({ note, type }: NoteCardProps) => {
   const { title, content, tags, color, priority, date, isPinned, isRead, id } = note;
   const dispatch = useAppDispatch()
+  const func = () => {
+    const imgContent = content.includes("img")
+    if (imgContent) {
+      return content;
+    } else {
+      return content.length > 75 ? content.slice(0, 75) + "..." : content;
+    }
+  }
   return (
      <>
       <Card style={{ background: color }}>
@@ -42,6 +52,7 @@ const NoteCard = ({ note, type }: NoteCardProps) => {
           </div>
         </TopBox>
         <ContentBox onClick={() => dispatch(readNote({ type, id }))}>
+          {parse(func())}
         </ContentBox>
         <TagsBox>
           {tags.map(({ tag, id }) => (
