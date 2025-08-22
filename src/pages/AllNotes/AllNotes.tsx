@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useAppSelector } from '../../hooks/redux'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { ButtonOutline, Container, EmptyMsgBox } from '../../styles/styles'
 import { Box, InputBox, TopBox } from './AllNotes.styles'
 import { toggleFilterNoteModal } from '../../store/modal/modalSlice'
@@ -9,7 +8,7 @@ import { FiltersModal } from '../../components'
 
 const AllNotes = () => {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   
   const {mainNotes} = useAppSelector(state => state.noteList)
   const [filter, setFilter] = useState('')
@@ -20,47 +19,51 @@ const AllNotes = () => {
     setFilter(e.target.value)
   }
    const clearHandler = () =>{
-    setFilter(e.target.value)
+    setFilter("")
   }
 
   return (
-    <Container>
+   <Container>
       {viewFiltersModal && (
-        <FiltersModal 
-        handleFilter = {filterHandler}
-        handleClear = {clearHandler}
-        filter = {filter}
-        >
-
-        </FiltersModal>
+        <FiltersModal
+          handleFilter={filterHandler}
+          handleClear={clearHandler}
+          filter={filter}
+        />
       )}
-      {mainNotes.length === 0 ?
+
+      {mainNotes.length === 0 ? (
         <EmptyMsgBox>
           노트가 없습니다.
-        </EmptyMsgBox> : (
-          <>
-            <TopBox>
-              <InputBox>
-                <input
-                  type={"text"}
-                  value={searchInput}
-                  onChange={e => setSearchInput(e.target.value)}
-                  placeholder='노트의 제목을 입력해 주세요.' />
-              </InputBox>
-              <div className='notes__filter-btn'>
-                <ButtonOutline
-                  className='nav__btn'
-                  onClick={() => dispatch(toggleFilterNoteModal(true))}>
-                  <span>정렬</span>
-                </ButtonOutline>
-              </div>
-            </TopBox>
-            <Box>
-              {/*Notes*/}
-              {getAllNotes(mainNotes, filter)}
-            </Box>
-          </>
-        )}
+        </EmptyMsgBox>
+      ) : (
+        <>
+          <TopBox>
+            <InputBox>
+              <input
+                type={"text"}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                placeholder="노트의 제목을 입력해주세요."
+              />
+            </InputBox>
+
+            <div className='notes__filter-btn'>
+              <ButtonOutline
+                onClick={() => dispatch(toggleFilterNoteModal(true))}
+                className="nav__btn"
+              >
+                <span>정렬</span>
+              </ButtonOutline>
+            </div>
+          </TopBox>
+
+          <Box>
+            {/* Notes */}
+            {getAllNotes(mainNotes, filter)}
+          </Box>
+        </>
+      )}
     </Container>
   )
 }

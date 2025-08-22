@@ -10,7 +10,7 @@ const notes = [
     isPinned: true,
     isRead: false,
     date: "10/12/22 2:55 PM",
-    createTime: new Date("Sat Dec 10 2022 14:55:22").getTime(),
+    createdTime: new Date("Sat Dec 10 2022 14:55:22").getTime(),
     editedTime: null,
     id: v4(),
   },
@@ -23,7 +23,7 @@ const notes = [
     isPinned: true,
     isRead: false,
     date: "10/12/23 2:55 PM",
-    createTime: new Date("Sat Dec 10 2023 14:55:22").getTime(),
+    createdTime: new Date("Sat Dec 10 2023 14:55:22").getTime(),
     editedTime: null,
     id: v4(),
   }

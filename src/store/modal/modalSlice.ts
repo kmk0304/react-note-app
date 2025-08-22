@@ -29,7 +29,7 @@ const modalSlice = createSlice({
 
     },
     toggleFilterNoteModal:(state, action) =>{
-      state.viewFiltersTagModal = action.payload
+      state.viewFiltersModal = action.payload
     }
   }
 })
