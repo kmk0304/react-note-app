@@ -7,6 +7,7 @@ import { useAppDispatch } from '../../hooks/redux'
 import getRelevantBtns from '../../utils/getRelevantBtns'
 import { readNote, setPinnedNotes } from '../../store/noteList/noteListSlice'
 import parse from 'html-react-parser'
+import ReadNoteModal from '../modal/ReadNoteModal/ReadNoteModal'
 
 interface NoteCardProps {
   note: Note
@@ -26,7 +27,8 @@ const NoteCard = ({ note, type }: NoteCardProps) => {
     }
   }
   return (
-     <>
+    <>
+      {isRead && <ReadNoteModal type={type} note={note} />}
       <Card style={{ background: color }}>
         <TopBox>
           <div
