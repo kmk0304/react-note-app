@@ -5,7 +5,7 @@ import { MainWrapper } from '../../components';
 
 const ArchiveNotes = () => {
 
-  const { archiveNotes } = useAppSelector((state) => state.notesList);
+  const { archiveNotes } = useAppSelector((state) => state.noteList);
 
   return (
     <Container>
